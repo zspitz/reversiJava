@@ -1,6 +1,8 @@
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public final class GameLogic {
@@ -11,7 +13,7 @@ public final class GameLogic {
 
     private char[][] state = new char[8][8];
     private char currentPlayer = 'b';
-    private Map<Point, Point[]> availableMoves = Collections.emptyMap();
+    private Map<Point, Point[]> availableMoves = new HashMap<>();
     private boolean isGameOver = false;
 
     public GameLogic() {
@@ -61,7 +63,7 @@ public final class GameLogic {
                     }
                 }
 
-                line.add(new Point(testRow, testCol));
+                line.add(new Point(testCol, testRow));
                 offsetCount += 1;
             }
         }
@@ -79,7 +81,7 @@ public final class GameLogic {
                     continue;
                 }
                 availableMoves.put(
-                        new Point(rowIndex, colIndex),
+                        new Point(colIndex, rowIndex),
                         changes);
             }
         }
@@ -99,6 +101,14 @@ public final class GameLogic {
         return isGameOver;
     }
 
+    public Map<Character, Long> getScore() {
+        return Arrays.stream(state)
+                .flatMapToInt(null)
+                .filter(i -> i != 0)
+                .boxed()
+                .collect(Collectors.groupingBy(i -> (char) i.intValue(), Collectors.counting()));
+    }
+
     private void switchPlayer() {
         switch (currentPlayer) {
             case 'b':
@@ -115,8 +125,8 @@ public final class GameLogic {
             return new MoveResult(OUT_OF_BOUNDS);
         }
 
-        var changes = getChanges(row, col);
-        if (changes.length == 0) {
+        var changes = availableMoves.get(new Point(col, row));
+        if (changes == null || changes.length == 0) {
             return new MoveResult(INVALID_MOVE);
         }
 
