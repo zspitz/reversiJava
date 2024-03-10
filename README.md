@@ -1,18 +1,10 @@
-## Getting Started
+This is a Reversi game written in Java.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+No UI beyond the console, and there are a few missing parts.
 
-## Folder Structure
+Beyond an intro to Java for me, I had two goals:
 
-The workspace contains two folders by default, where:
+* Separation of game logic from rendering
+* Rerender on each state update
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+I'd written a previous version in [JavaScript](https://github.com/zspitz/reversiJs) along the same lines.
